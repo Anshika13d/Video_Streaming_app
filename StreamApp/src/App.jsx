@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import { darkTheme, lightTheme } from "./utils/Theme";
 import Home from "./pages/Home";
 import Video from "./pages/Video";
+import SignIn from "./pages/SignIn";
 
 //rrd
 import {
@@ -18,6 +19,7 @@ import {
   Routes,
   Link,
 } from "react-router-dom";
+
 
 const Container = styled.div`
   display: flex;  
@@ -51,6 +53,7 @@ function App() {
             {/* main route */}
             <Route path="/">
               <Route index element={<Home/>} />
+              <Route path="signin" element={<SignIn />} />
               <Route path="video">
                 <Route path=":id" element={<Video/>} />
               </Route>
