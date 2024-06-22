@@ -6,9 +6,17 @@ import videoRoutes from "./routes/videos.js"
 import commentRoutes from "./routes/comments.js"
 import authRoutes from "./routes/auth.js"
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
+
+// app.use(cors({
+//     origin: "http://localhost:5173",
+//     methods: "GET,POST,PUT,DELETE,OPTIONS",
+//     allowedHeaders: "Content-Type,Authorization",
+//     credentials: true
+// }));
 
 const connect = () => {
     mongoose
@@ -21,6 +29,7 @@ const connect = () => {
         })
 };
 
+//middlewares
 app.use(cookieParser())
 app.use(express.json())
 app.use("/api/auth", authRoutes)

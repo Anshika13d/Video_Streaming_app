@@ -1,5 +1,6 @@
 import { createError } from "../error.js"
 import User from "../models/User.js"
+import Video from "../models/Video.js";
 
 export const update = async (req, res, next) => {
     //compare the jwt id and the user id so that the user is verified
@@ -93,8 +94,19 @@ export const unsubscribe = async (req, res, next) => {
 }
 
 export const like = async (req, res, next) => {
+    const id = req.user.id;
+    const videoId = req.params.videoId;
     try{
+        await Video.findByIdAndUpdate(videoId, {
+// this $addtoSet method will ensure that no matter how many times you click the like button it will, your id will only be present once so its like a set
 
+            $addToSet:{likes:id},
+
+            //if you dislike the video before so it will pull out the user id 
+            $pull:{dislikes:id}
+        })
+
+        res.status(200).json("The video has been liked!")
     }
     catch(err){
         next(err);
@@ -102,8 +114,15 @@ export const like = async (req, res, next) => {
 }
 
 export const dislike = async (req, res, next) => {
+    const id = req.user.id;
+    const videoId = req.params.videoId;
     try{
+        await Video.findByIdAndUpdate(videoId, {
+            $addToSet:{dislikes:id},
+            $pull:{likes:id}
+        })
 
+        res.status(200).json("The video has been disliked!")
     }
     catch(err){
         next(err);

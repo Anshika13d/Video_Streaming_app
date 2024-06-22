@@ -106,14 +106,18 @@ function Menu({darkMode, setDarkMode}) {
                 <HomeIcon />
                 Home
             </Item>
-            <Item>
-                <ExploreOutlinedIcon />
-                Explore
-            </Item>
+            <Link to="trends" style={{textDecoration:"none", color:"inherit"}}>
+                <Item>
+                    <ExploreOutlinedIcon />
+                    Explore
+                </Item>
+            </Link>
+            <Link to="subscriptions" style={{textDecoration:"none", color:"inherit"}}>
             <Item>
                 <SubscriptionsOutlinedIcon />
                 Subscription
             </Item>
+            </Link>
             <Hr/>
             <Item>
                 <VideoLibraryOutlinedIcon />

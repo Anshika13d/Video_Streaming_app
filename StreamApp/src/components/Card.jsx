@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import {format} from "timeago.js";
 
 //rrd
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
 const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "250px"};
@@ -56,17 +58,29 @@ const Info = styled.div`
 `;
 
 
-function Card({type}) {
+function Card({type, video}) {
+
+  const [channel, setChannel] = useState({});
+  
+  useEffect(() =>{
+    const fetchChannel = async () => {
+      const res = await axios.get(`api/users/find/${video.userId}`)
+      setChannel(res.data);
+    }
+    fetchChannel()
+  }, [video.userId]);
+
+
   return (
     <Link to="/video/test" style={{textDecoration:"none"}}>
     <Container type={type}>
-      <Image type={type} src="https://e00-marca.uecdn.es/assets/multimedia/imagenes/2023/03/19/16791881145178.jpg" />
+      <Image type={type} src={video.imgUrl} />
       <Details type={type}>
-        <ChannelImage type={type} src="https://imageio.forbes.com/specials-images/imageserve/653fcd49893eb27774ba7ecc/65th-GRAMMY-Awards---Arrivals/960x0.jpg?format=jpg&width=960" />
+        <ChannelImage type={type} src={channel.img} />
         <Texts>
-          <Title>test video</Title>
-          <ChannelName>Jus play</ChannelName>
-          <Info>660,908 views 1 day ago</Info>
+          <Title>{video.title}</Title>
+          <ChannelName>{channel.name}</ChannelName>
+          <Info>{video.views} views {format(video.createdAt)}</Info>
         </Texts>
       </Details>
     </Container>
