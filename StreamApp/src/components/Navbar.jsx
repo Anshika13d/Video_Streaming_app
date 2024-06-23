@@ -53,6 +53,9 @@ const Button = styled.button`
 `;
 
 function Navbar() {
+
+  const { currentUser } = userSelector(state=>state.user)
+
   return (
     <Container>
       <Wrapper>
